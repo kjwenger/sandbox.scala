@@ -1,20 +1,45 @@
 package com.u14n.sandbox.scala
 
 import org.junit.Test
+import org.junit.Assert._
 import java.util.ArrayList
 import java.util.Arrays
+import java.util.stream.Collectors
 
 class LambdaTest {
 
   @Test
-  def shouldStream() {
-    val list = new ArrayList[Int](Arrays.asList(1, 2, 3, 4))
-    assert(list.size == 4)
-//    val multiplier = (e: Int) => e * 2
-// http://scala-lang.org/news/2.11.1
-/// A new experimental way of compiling closures, implemented by @JamesIry. With -Ydelambdafy:method anonymous functions are compiled faster, with a smaller bytecode footprint. This works by keeping the function body as a private (static, if no this reference is needed) method of the enclosing class, and at the last moment during compilation emitting a small anonymous class that extends FunctionN and delegates to it. This sets the scene for a smooth migration to Java 8-style lambdas (not yet implemented).     */
-//    val mapped = list.stream().map(multiplier)
-    val mapped = list.stream().map((e: Int) => e * 2)
-//    val mapped = list.stream().map(multiplier)
+  def shouldStreamMap() {
+    assertEquals(Arrays.asList(2, 4, 6, 8), Arrays.asList(1, 2, 3, 4)
+        .stream()
+//        .map((e: Int) => e * 2)
+        .map(_ * 2)
+        .collect(Collectors.toList())
+      )
   }
+
+  @Test
+  def shouldStreamMapFilterFindFirst() {
+    assertEquals(4, Arrays.asList(1, 2, 3, 4)
+        .stream()
+//        .filter((e: Int) => e == 4)
+        .filter(_ == 4)
+        .findFirst()
+        .get()
+      )
+  }
+
+//  @Test
+//  def shouldStreamMapReduce() {
+//    assertEquals(20, Arrays.asList(1, 2, 3, 4)
+//        .stream()
+//        .map((e: Int) => e * 2)
+////        .reduce(0, (c, e: Int) => e)
+////        .reduce(0, (c, e: Int) => c + e))
+//        .reduce(0, {(c, e: Int) => c + e})
+////        .reduce(0, _ + _)
+////        .reduce(0, _)
+//      )
+  }
+
 }
