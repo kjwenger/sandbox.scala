@@ -40,6 +40,6 @@ class LambdaTest {
 ////        .reduce(0, _ + _)
 ////        .reduce(0, _)
 //      )
-  }
+//  }
 
 }
